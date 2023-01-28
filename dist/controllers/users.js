@@ -1,35 +1,44 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.getUsers = exports.createUser = void 0;
+exports.getUsersDataByAuth0Id = exports.getAllUsers = exports.checkUser = void 0;
 const user_1 = require("../models/user");
-const createUser = async (req, res, next) => {
+const checkUser = async (req, res, next) => {
+    // if (req) {
+    //   const userAuth0IdInRequest: string = req.params.userAuth0Id
+    //   const findUser = await User.findOne({ auth0Id: userAuth0IdInRequest })
+    //   if (!findUser) {
+    //     const user = new User({
+    //       auth0Id: userAuth0IdInRequest,
+    //     })
+    //     await user.save()
+    //     if (user) {
+    //       res.status(200).json({
+    //         message:
+    //           "We couldn't find a user withh the requested id, we created a new one.",
+    //         user,
+    //       })
+    //     }
+    //     res.status(200).json({ message: "Something goes wrong" })
+    //   }
+    //   res.json(findUser)
+    // }
+    res.json({ message: "ok" });
+};
+exports.checkUser = checkUser;
+const getAllUsers = async (req, res, next) => {
     if (req) {
-        // const auth0UserId = (req.body as { auth0UserId: string }).auth0UserId
-        // const isUserExist: User | undefined = allUsers.find(
-        //   user => user.auth0id === auth0UserId
-        // )
-        // if (isUserExist === undefined) {
-        //   const newUser: User = new User(auth0UserId)
-        //   USERS.push(newUser)
-        //   res.json({ message: "new user created", userId: newUser })
-        //   return
-        // }
-        const user = new user_1.User({
-            name: "Roman",
-            email: "wm_swan@icloud.com",
-            avatar: "OK",
-        });
-        await user.save();
-        console.log(user.email);
-        if (user) {
-            res.status(200).json({ message: "created" });
+        const allUsers = await user_1.User.find();
+        res.json(allUsers);
+    }
+};
+exports.getAllUsers = getAllUsers;
+const getUsersDataByAuth0Id = async (req, res, next) => {
+    if (req) {
+        const userAuth0IdInRequest = req.params.userAuth0Id;
+        if (userAuth0IdInRequest) {
+            res.json(userAuth0IdInRequest);
         }
+        res.json({ message: "Please provide user id" });
     }
 };
-exports.createUser = createUser;
-const getUsers = async (req, res, next) => {
-    if (req) {
-        res.json({ message: "test2" });
-    }
-};
-exports.getUsers = getUsers;
+exports.getUsersDataByAuth0Id = getUsersDataByAuth0Id;

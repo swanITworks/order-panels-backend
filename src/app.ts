@@ -5,10 +5,14 @@ import { validateAccessToken } from "./middleware/auth0.middleware"
 
 import userRoutes from "./routes/users"
 import { connectToDatabes } from "./services/database.service"
+import cors from "cors"
 
 const app = express()
 
+app.use(cors)
+
 connectToDatabes().catch(console.dir)
+
 app.use(json())
 app.use(validateAccessToken)
 app.use("/users", userRoutes)

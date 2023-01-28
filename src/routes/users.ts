@@ -1,11 +1,17 @@
 import { Router } from "express"
-import { createUser, getUsers } from "../controllers/users"
+import {
+  checkUser,
+  getAllUsers,
+  getUsersDataByAuth0Id,
+} from "../controllers/users"
 
 const router = Router()
 
-router.post("/", createUser)
+router.get("/:userAuth0Id", checkUser)
 
-router.get("/", getUsers)
+//router.get("/", getAllUsers)
+
+//router.get("/:userAuth0Id", getUsersDataByAuth0Id)
 
 router.patch("/:id")
 
