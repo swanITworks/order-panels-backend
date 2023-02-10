@@ -6,29 +6,32 @@ export interface IUser extends Document {
   auth0id: string
 }
 
-export const checkUser: RequestHandler = async (req, res, next) => {
-  // if (req) {
-  //   const userAuth0IdInRequest: string = req.params.userAuth0Id
+export const checkUserAndCreateNewOneIfNotExist: RequestHandler = async (
+  req,
+  res,
+  next
+) => {
+  if (req) {
+    const userAuth0IdInRequest: string = req.params.userAuth0Id
 
-  //   const findUser = await User.findOne({ auth0Id: userAuth0IdInRequest })
+    const findUser = await User.findOne({ auth0Id: userAuth0IdInRequest })
 
-  //   if (!findUser) {
-  //     const user = new User({
-  //       auth0Id: userAuth0IdInRequest,
-  //     })
-  //     await user.save()
-  //     if (user) {
-  //       res.status(200).json({
-  //         message:
-  //           "We couldn't find a user withh the requested id, we created a new one.",
-  //         user,
-  //       })
-  //     }
-  //     res.status(200).json({ message: "Something goes wrong" })
-  //   }
-  //   res.json(findUser)
-  // }
-  res.json({ message: "ok" })
+    if (!findUser) {
+      const user = new User({
+        auth0Id: userAuth0IdInRequest,
+      })
+      await user.save()
+      if (user) {
+        res.status(201).json({
+          message:
+            "We couldn't find a user withh the requested id, we created a new one.",
+          user,
+        })
+      }
+      res.status(204).json({ message: "Something goes wrong" })
+    }
+    res.status(200).json(findUser)
+  }
 }
 
 export const getAllUsers: RequestHandler = async (req, res, next) => {

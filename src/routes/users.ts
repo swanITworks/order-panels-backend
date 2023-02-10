@@ -1,20 +1,20 @@
 import { Router } from "express"
 import {
-  checkUser,
+  checkUserAndCreateNewOneIfNotExist,
   getAllUsers,
   getUsersDataByAuth0Id,
 } from "../controllers/users"
 
 const router = Router()
 
-router.get("/:userAuth0Id", checkUser)
+router.get("/:userAuth0Id", checkUserAndCreateNewOneIfNotExist)
 
 //router.get("/", getAllUsers)
 
 //router.get("/:userAuth0Id", getUsersDataByAuth0Id)
 
-router.patch("/:id")
+// router.patch("/:id")
 
-router.delete("/:id")
+// router.delete("/:id")
 
 export default router

@@ -9,12 +9,12 @@ import cors from "cors"
 
 const app = express()
 
-app.use(cors)
-
 connectToDatabes().catch(console.dir)
 
 app.use(json())
+app.use(cors())
 app.use(validateAccessToken)
+
 app.use("/users", userRoutes)
 
 app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
